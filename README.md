@@ -6,3 +6,8 @@ Atividades desenvolvidas na discplina: laboratórios de sistemas operacionais
     - Criar um script para enviar um email, caso tenha alterações em um diretório que possua modificações.
     - Implementar o script para que se faça a restauração dos arquivos de maneira automática.
     - Uso da hash sha256sum para haver se ouve mudanças.
+## Atividade Laboratório 03
+### Tarefas
+    -Executar e explicar os códigos que utilizam chamadas de sistema:
+            Código-1: Cria um arquivo para inserção de dados.
+            Código-2: Exibe todos os arquivos em um diretório.
