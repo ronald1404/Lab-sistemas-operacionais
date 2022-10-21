@@ -11,3 +11,4 @@ Atividades desenvolvidas na discplina: laboratórios de sistemas operacionais
     -Executar e explicar os códigos que utilizam chamadas de sistema:
             Código-1: Cria um arquivo para inserção de dados.
             Código-2: Exibe todos os arquivos em um diretório.
+    Link notion: https://giddy-comb-70b.notion.site/Laborat-rio-03-da5c41662a4d42e8b57cb8dc3d27639e
