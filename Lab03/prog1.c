@@ -23,15 +23,12 @@ int main(){
 	flush_in();
 
 	printf("\nEntre com um texto qualquer:");
+	//ler o texto com o input pelo teclado
 	fgets(buff, STRSIZE, stdin); 
 	
-	//getline(&buff,&sizebuffer,stdin); 
-	
-
-	//ler o texto com o input pelo teclado
 	//criar o arquivo caso não exista em modo de escrita, O nome do arquivo no código será o fn
 	fd = open(fn,O_CREAT|O_WRONLY, 0444);
-	//chamada de sistema para escrita, parêmetros: (descritor de arquivo, dados do buffer, numero de contagem de dados do buffer)
+	//chamada de sistema para escrita, parâmetros: (descritor de arquivo, dados do buffer, numero de contagem de dados do buffer)
 	n = write(fd,buff,strlen(buff));
 
 	close(fd);
@@ -45,6 +42,6 @@ void flush_in()
    //EOF significa fim da linha e possui um valor -1;
    //fgetc atribui os chars do stdin à variável ch;
    //quando ch utilizar todos os chars de stdin retorna -1;
-   //esse processo limpara stdin;
+   //esse processo limpará stdin;
    while( (ch = fgetc(stdin)) != EOF && ch != '\n' ){}
 }
