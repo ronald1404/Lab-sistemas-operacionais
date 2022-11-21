@@ -18,7 +18,7 @@ int main(){
 
 	printf("Entre com o nome de um arquivo novo:\n");
 	scanf("%s",&fn);
-
+	
 	//limpar stdin
 	flush_in();
 
