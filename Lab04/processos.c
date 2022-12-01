@@ -1,9 +1,16 @@
+#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 int fibo(int);
-long fatorial(int);
+int fatorial(int);
 void TorreHanoi(int, int, int, int);
+
+void processoPai();
+void processoFilho();
+void processoNeto();
 
 int main()
 {
@@ -15,31 +22,26 @@ int main()
         pid_t pid2 = fork();
         if (pid2 == 0)
         {
-            printf("pNeto, pid = %d:\n", getpid());
-            TorreHanoi(0, 2, 1, 6);
+            processoNeto();
             exit(0);
         }
         else
         {
-            printf("pFilho, pid = %d :\n\tFatorial de 6 = %d\n", getpid(), fatorial(5));
+            processoFilho();
             wait(NULL);
             exit(0);
         }
     }
     else
-    {
-        // printf("pPai:\n");
-        printf("pPai, pid = %d :\n\tn de fibonacci = 5: %d\n", getpid(), fibo(5));
-    }
-
-    return (0);
+        processoPai();
 }
 
 int fibo(int n)
 {
     if (n == 1)
         return 1;
-    int a = 0, b = 1, aux = 0;
+    int a = 0, b = 1;
+    long aux = 0;
     for (int i = 1; i < n; i++)
     {
         aux = a + b;
@@ -49,7 +51,7 @@ int fibo(int n)
     return aux;
 }
 
-long fatorial(int n)
+int fatorial(int n)
 {
     if (n == 1)
         return 1;
@@ -58,10 +60,10 @@ long fatorial(int n)
         fat *= i;
     return fat;
 }
-int count = 0;
 
 void TorreHanoi(int origem, int destino, int auxiliar, int quantidade)
 {
+    int count = 0;
     if (quantidade == 1)
     {
         printf("Move de %d para %d \n ", origem, destino);
@@ -73,4 +75,22 @@ void TorreHanoi(int origem, int destino, int auxiliar, int quantidade)
         TorreHanoi(origem, destino, auxiliar, 1);
         TorreHanoi(auxiliar, destino, origem, quantidade - 1);
     }
+}
+
+void processoPai()
+{
+
+    for (int i = 1; i <= 100; i++)
+    {
+        printf("pPai, pid = %d :\n\t%d° termo de fibonacci = %d: \n", getpid(), i, fibo(i));
+    }
+}
+void processoFilho()
+{
+    printf("pFilho, pid = %d :\n\tFatorial de 5 = %d\n", getpid(), fatorial(5));
+}
+void processoNeto()
+{
+    printf("pNeto, pid = %d:\n", getpid());
+    TorreHanoi(0, 2, 1, 6);
 }
