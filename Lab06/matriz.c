@@ -144,27 +144,26 @@ void multMatriz(float matrizA[25][25], float matrizB[25][25]){
     if(colunaA == linhaB) {
 
 	// Imprime as matrizes definidas
-	printf("---------------------------- A⁻¹ x B⁻¹  ---------------------------------\n\n");
+	printf("A⁻¹ x B⁻¹: \n\n");
 
 	for(i = 0; i < linhaA; i++) {     
-	    printf("|");
+	    //printf("|");
 		for(j = 0; j < colunaA; j++) {
 			printf("%8.2f", matrizA[i][j]);
 		}
-		printf("|");
-		printf("     |");
+//		printf("|");
+		//printf("     |");
 		for(j = 0; j < colunaB; j++) {
 			printf("%8.2f", matrizB[i][j]); 
 		}
-		printf("|");
 		printf("\n");
 		if (i == 0){
-		    printf("                    X\n");
+		    printf("\t\t x\t\t\n");
 		}
 
 	}
 
-	printf("---------------------------- RESULTADO ---------------------------------\n\n");
+	printf("RESULTADO:\n\n");
 
 	//Processamento e saida em tela  =  PRODUTO DAS MATRIZES
 	for(i = 0; i < linhaA; i++) {
@@ -189,18 +188,19 @@ void multMatriz(float matrizA[25][25], float matrizB[25][25]){
 	printf("\n\n Nao ha com multiplicar as matrizes dadas ");
 }
 
-}//cabooooo
+}
 
 int main(void){
     float a[25][25], b[25][25];
     a[0][0] = 1;
     a[0][1] = 2;
-    a[1][0] = 3;
-    a[1][1] = 4;
-    b[0][0] = 5;
-    b[0][1] = 6;
-    b[1][0] = 7;
-    b[1][1] = 8;
+    a[1][0] = 0;
+    a[1][1] = 7;
+    
+    b[0][0] = 3;
+    b[0][1] = 0;
+    b[1][0] = 1;
+    b[1][1] = 2;
 
     int fd[2];
     int n = 0;
@@ -209,40 +209,36 @@ int main(void){
 
     pipe(fd);
 
+
     if (fork() == 0){
         printf("\n---------------------------");
-        printf("\n\nProcesso filho!!!");
+        printf("\n\nProcesso filho:");
         inversaMatriz(b);
         for(c = 0; c < 2; c++) {
             for(j = 0; j < 2; j++) {
-			    sprintf(line, "%f", b[c][j]);
+		sprintf(line, "%f", b[c][j]);
                 write(fd[1], line, BUFSIZE);
-                printf("\nEnviado o float %f para o processo pai!\n", atof(line));
-                sleep(1);
+                printf("\n\t\tGravando %0.2f no arquivo!\n", atof(line));
+                //sleep(1);
 		        }
 	        }
         }
-
-    else{
-        printf("Processo pai!!!");
+        else{     
+        wait(NULL);
+        
+        printf("Processo pai:");
         inversaMatriz(a);
-        for (i=0; i < 4; i++) {
+        
+        for (i=0; i < 2; i++) {
+            for(int j = 0; j < 2;j++){
             read(fd[0], line, BUFSIZE);
-            printf("\n                Recebendo o float %f do processo filho!\n", atof(line));
-            if (i == 0){
-                b[0][0] = atof(line);
-            }
-            if (i == 1){
-                b[0][1] = atof(line);
-            }
-            if (i == 2){
-                b[1][0] = atof(line);
-            }
-            if (i == 3){
-                b[1][1] = atof(line);
-            }
+            printf("\n \t\tLendo %0.2f do arquivo!\n", atof(line));
+            	b[0][0] = atof(line);
         }
+        
+        
         printf("\n");
+	}
         multMatriz(a, b);
     }
 }

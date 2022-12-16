@@ -7,7 +7,7 @@
 
 int main(int argc, char const *argv[])
 {
-    Escalonador escalonador;
+    Escalonador escalonador[2];
     FLVazia(&escalonador);
 
     prioridade(escalonador,10);
